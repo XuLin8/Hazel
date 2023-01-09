@@ -27,6 +27,7 @@ project "Hazel" --项目名称
 
     includedirs--附加包含目录
     {
+        "%{prj.name}/src",
         "%{prj.name}/vendor/spdlog/include"
     }
 
