@@ -11,6 +11,8 @@ workspace "Hazel" --解决方案名称
 --详细的所有支持的tokens 可参考 [https://github.com/premake/premake-core/wiki/Tokens]
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+
+
 project "Hazel" --项目名称
     location "Hazel" --相对路径
     kind "SharedLib" --表明该项目是dll动态库
@@ -18,6 +20,9 @@ project "Hazel" --项目名称
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")--输出目录
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")--中间临时文件的目录
+
+    pchheader "hzpch.h"
+    pchsource "Hazel/src/hzpch.cpp"
 
     files--该项目的文件
     {
@@ -31,6 +36,7 @@ project "Hazel" --项目名称
         "%{prj.name}/vendor/spdlog/include"
     }
 
+    
     filter "system:windows"--windows平台的配置
         cppdialect "c++17"
         staticruntime "On"
@@ -39,7 +45,7 @@ project "Hazel" --项目名称
         defines --预编译宏
         {
             "HZ_BUILD_DLL",
-            "HZ_PLATFORM_WINDOWS",
+            "HZ_PLATFORM_WINDOWS"
         }
 
         postbuildcommands -- build后的自定义命令
@@ -69,6 +75,7 @@ project "Sandbox"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
 
     files
     {
