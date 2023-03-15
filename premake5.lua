@@ -25,6 +25,7 @@ project "Hazel" --项目名称
     location "Hazel" --相对路径
     kind "SharedLib" --表明该项目是dll动态库
     language "c++"
+    staticruntime "off"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")--输出目录
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")--中间临时文件的目录
@@ -57,7 +58,6 @@ project "Hazel" --项目名称
     
     filter "system:windows"--windows平台的配置
         cppdialect "c++17"
-        staticruntime "On"
         systemversion "latest"
 
         defines --预编译宏
@@ -74,23 +74,24 @@ project "Hazel" --项目名称
 
     filter "configurations:Debug"
         defines "HZ_DEBUG"
-        buildoptions "/MDd"
+        runtime "Debug"
         symbols "on"
 
     filter "configurations:Release"
         defines "HZ_RELEASE"
-        buildoptions "/MD"
+        runtime "Release"
         optimize "on"
 
     filter "configurations:Dist"
         defines "HZ_DIST"
-        buildoptions "/MD"
+        runtime "Release"
         optimize "on"
 
 project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
     language "c++"
+    staticruntime "off"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -115,7 +116,6 @@ project "Sandbox"
 
     filter "system:windows"
         cppdialect "c++17"
-        staticruntime "On"
         systemversion "latest"
 
         defines
@@ -125,15 +125,15 @@ project "Sandbox"
 
     filter "configurations:Debug"
         defines "HZ_DEBUG"
-        buildoptions "/MDd"
+        runtime "Debug"
         symbols "on"
 
     filter "configurations:Release"
         defines "HZ_RELEASE"
-        buildoptions "/MD"
+        runtime "Release"
         optimize "on"
 
     filter "configurations:Dist"
         defines "HZ_DIST"
-        buildoptions "/MD"
+        runtime "Release"
         optimize "on"
