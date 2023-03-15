@@ -5,30 +5,35 @@
 
 #include <glad/glad.h>
 
+namespace Hazel {
 
-namespace Hazel
-{
-#define BIND_EVENT_FN(x) std::bind(&Application::x,this,std::placeholders::_1)
+#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
-	Application::Application()
+	Application* Application::s_Instance = nullptr;
+
+	Application::Application() 
 	{
+		HZ_CORE_ASSERT(!s_Instance, "Application already exists!");
+		s_Instance = this;
+
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 	}
 
 	Application::~Application()
 	{
-
 	}
 
 	void Application::PushLayer(Layer* layer)
 	{
-		m_layerStack.PushLayer(layer);
+		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
 	}
 
-	void Application::PushOverLay(Layer* overLayer)
+	void Application::PushOverlay(Layer* layer)
 	{
-		m_layerStack.PushOverlay(overLayer);
+		m_LayerStack.PushOverlay(layer);
+		layer->OnAttach();
 	}
 
 	void Application::OnEvent(Event& e)
@@ -36,7 +41,7 @@ namespace Hazel
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 
-		for (auto it = m_layerStack.end(); it != m_layerStack.begin();)
+		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
 		{
 			(*--it)->OnEvent(e);
 			if (e.Handled)
@@ -46,12 +51,14 @@ namespace Hazel
 
 	void Application::Run()
 	{
-	
-		while (m_Running) {
+		while (m_Running)
+		{
 			glClearColor(1, 0, 1, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
-			for (Layer* layer : m_layerStack)
+
+			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
+
 			m_Window->OnUpdate();
 		}
 	}
@@ -61,4 +68,5 @@ namespace Hazel
 		m_Running = false;
 		return true;
 	}
+
 }
