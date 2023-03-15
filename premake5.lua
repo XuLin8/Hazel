@@ -1,6 +1,6 @@
 workspace "Hazel" --解决方案名称
     architecture "x64" --编译平台 只编64位--(x86,x86_64,ARM)
-
+    startproject "Sandbox"
     configurations 
     {
         "Debug",
@@ -69,7 +69,7 @@ project "Hazel" --项目名称
 
         postbuildcommands -- build后的自定义命令
         {
-            ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox") --拷贝引擎dll库到sanbox.exe的同一目录下去
+            ("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox\"") --拷贝引擎dll库到sanbox.exe的同一目录下去
         }
 
     filter "configurations:Debug"
