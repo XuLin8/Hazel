@@ -1,5 +1,5 @@
 workspace "Hazel" --解决方案名称
-    architecture "x64" --编译平台 只编64位--(x86,x86_64,ARM)
+    architecture "x86_x64" --编译平台 只编64位--(x86,x86_64,ARM)
     startproject "Sandbox"
     configurations 
     {
