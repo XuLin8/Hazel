@@ -1,5 +1,5 @@
 workspace "Hazel" --解决方案名称
-    architecture "x86_x64" --编译平台 只编64位--(x86,x86_64,ARM)
+    architecture "x86_64" --编译平台 只编64位--(x86,x86_64,ARM)
     startproject "Sandbox"
     configurations 
     {
@@ -56,7 +56,8 @@ project "Hazel" --项目名称
 
     defines
     {
-        "_CRT_SECURE_NO_WARNINGS"
+        "_CRT_SECURE_NO_WARNINGS",
+		"GLFW_INCLUDE_NONE"
     }
 
     includedirs--附加包含目录
@@ -83,9 +84,6 @@ project "Hazel" --项目名称
 
         defines --预编译宏
         {
-            "HZ_BUILD_DLL",
-            "HZ_PLATFORM_WINDOWS",
-            "GLFW_INCLUDE_NONE"
         }
 
        
