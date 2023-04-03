@@ -1,6 +1,6 @@
 workspace "Hazel" --解决方案名称
     architecture "x86_64" --编译平台 只编64位--(x86,x86_64,ARM)
-    startproject "Sandbox"
+    startproject "Hazelnut"
     configurations 
     {
         "Debug",
@@ -156,8 +156,8 @@ project "Sandbox"
         runtime "Release"
         optimize "on"
 
-project "Hazel-Editor"
-    location "Hazel-Editor"
+project "Hazelnut"
+    location "Hazelnut"
     kind "ConsoleApp"
     language "c++"
     cppdialect "c++17"
