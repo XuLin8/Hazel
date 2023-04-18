@@ -33,7 +33,7 @@ namespace Hazel {
 		std::string Name;
 		ShaderDataType Type;
 		uint32_t Size;
-		size_t  Offset;
+		size_t Offset;
 		bool Normalized;
 
 		BufferElement() = default;
@@ -70,14 +70,14 @@ namespace Hazel {
 	public:
 		BufferLayout() {}
 
-		BufferLayout(const std::initializer_list<BufferElement>& elements)
+		BufferLayout(std::initializer_list<BufferElement> elements)
 			: m_Elements(elements)
 		{
 			CalculateOffsetsAndStride();
 		}
 
-		inline uint32_t GetStride() const { return m_Stride; }
-		inline const std::vector<BufferElement>& GetElements() const { return m_Elements; }
+		uint32_t GetStride() const { return m_Stride; }
+		const std::vector<BufferElement>& GetElements() const { return m_Elements; }
 
 		std::vector<BufferElement>::iterator begin() { return m_Elements.begin(); }
 		std::vector<BufferElement>::iterator end() { return m_Elements.end(); }
@@ -86,7 +86,7 @@ namespace Hazel {
 	private:
 		void CalculateOffsetsAndStride()
 		{
-			size_t  offset = 0;
+			size_t offset = 0;
 			m_Stride = 0;
 			for (auto& element : m_Elements)
 			{
@@ -117,7 +117,7 @@ namespace Hazel {
 		static Ref<VertexBuffer> Create(float* vertices, uint32_t size);
 	};
 
-	// Currently only supports 32-bit index buffers
+	// Currently Hazel only supports 32-bit index buffers
 	class IndexBuffer
 	{
 	public:
