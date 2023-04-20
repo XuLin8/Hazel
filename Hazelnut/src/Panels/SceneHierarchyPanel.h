@@ -5,6 +5,7 @@
 #include "Hazel/Scene/Entity.h"
 
 namespace Hazel {
+
 	class SceneHierarchyPanel
 	{
 	public:
@@ -23,4 +24,5 @@ namespace Hazel {
 		Ref<Scene> m_Context;
 		Entity m_SelectionContext;
 	};
+
 }

@@ -332,6 +332,7 @@ namespace Hazel {
 			m_GizmoType = ImGuizmo::OPERATION::SCALE;
 			break;
 		}
+		return false;
 	}
 
 	void EditorLayer::NewScene()
