@@ -16,3 +16,6 @@
 [submodule "Hazel/vendor/imgui"]
 	path = Hazel/vendor/imgui
 	url = https://github.com/thecherno/imgui
+[submodule "Hazel/vendor/box2D"]
+	path = Hazel/vendor/box2D
+	url = https://github.com/thecherno/box2d
