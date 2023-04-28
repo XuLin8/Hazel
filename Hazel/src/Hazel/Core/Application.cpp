@@ -7,7 +7,7 @@
 
 #include "Hazel/Core/Input.h"
 
-#include <glfw/glfw3.h>
+#include "Hazel/Utils/PlatformUtils.h"
 
 namespace Hazel {
 
@@ -82,7 +82,7 @@ namespace Hazel {
 		{
 			HZ_PROFILE_SCOPE("RunLoop");
 
-			float time = (float)glfwGetTime();
+			float time = Time::GetTime();
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 
