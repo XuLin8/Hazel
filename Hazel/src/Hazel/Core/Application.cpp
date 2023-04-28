@@ -6,30 +6,33 @@
 #include "Hazel/Renderer/Renderer.h"
 
 #include "Hazel/Core/Input.h"
-
 #include "Hazel/Utils/PlatformUtils.h"
 
 namespace Hazel {
 
 	Application* Application::s_Instance = nullptr;
 
-	Application::Application(const std::string& name, ApplicationCommandLineArgs args)
-		: m_CommandLineArgs(args)
+	Application::Application(const ApplicationSpecification& specification)
+		: m_Specification(specification)
 	{
 		HZ_PROFILE_FUNCTION();
 
 		HZ_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
 
-		m_Window = Window::Create(WindowProps(name));
+		// Set working directory here
+		if (!m_Specification.WorkingDirectory.empty())
+			std::filesystem::current_path(m_Specification.WorkingDirectory);
+
+		m_Window = Window::Create(WindowProps(m_Specification.Name));
 		m_Window->SetEventCallback(HZ_BIND_EVENT_FN(Application::OnEvent));
 
 		Renderer::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
-
 	}
+
 	Application::~Application()
 	{
 		HZ_PROFILE_FUNCTION();
@@ -94,6 +97,7 @@ namespace Hazel {
 					for (Layer* layer : m_LayerStack)
 						layer->OnUpdate(timestep);
 				}
+
 				m_ImGuiLayer->Begin();
 				{
 					HZ_PROFILE_SCOPE("LayerStack OnImGuiRender");
@@ -103,6 +107,7 @@ namespace Hazel {
 				}
 				m_ImGuiLayer->End();
 			}
+
 			m_Window->OnUpdate();
 		}
 	}
@@ -115,6 +120,8 @@ namespace Hazel {
 
 	bool Application::OnWindowResize(WindowResizeEvent& e)
 	{
+		HZ_PROFILE_FUNCTION();
+
 		if (e.GetWidth() == 0 || e.GetHeight() == 0)
 		{
 			m_Minimized = true;
@@ -126,4 +133,5 @@ namespace Hazel {
 
 		return false;
 	}
+
 }
